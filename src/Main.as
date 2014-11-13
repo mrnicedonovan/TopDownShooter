@@ -9,6 +9,7 @@ package
 	 */
 	public class Main extends Sprite 
 	{
+		private var tank:Tank;
 		
 		public function Main():void 
 		{
@@ -20,6 +21,10 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
+			tank = new Tank();
+			this.addChild(tank);
+			tank.x = stage.stageWidth * 0.5;
+			tank.y = stage.stageHeight * 0.5;
 		}
 		
 	}
