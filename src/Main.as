@@ -1,10 +1,13 @@
 package 
 {
+	import flash.display.NativeMenu;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -12,11 +15,11 @@ package
 	 */
 	public class Main extends Sprite 
 	{
-		private var tank:Tank;
-		private var wpressed:Boolean = false;
-		private var apressed:Boolean = false;
-		private var spressed:Boolean = false;
-		private var dpressed:Boolean = false;
+		private var tank:Tunk;
+		private var bullets:Array = [];
+		private var mouseClicked:Boolean = false;
+		private var input:Point;
+		private var speed:Number = 0;
 		
 		public function Main():void 
 		{
@@ -26,9 +29,11 @@ package
 		
 		private function init(e:Event = null):void 
 		{
+			input = new Point(0, 0);
+			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
-			tank = new Tank();
+			tank = new Tunk();
 			this.addChild(tank);
 			tank.x = stage.stageWidth * 0.5;
 			tank.y = stage.stageHeight * 0.5;
@@ -38,91 +43,112 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			stage.addEventListener(MouseEvent.CLICK, onClick);
 			this.addEventListener(Event.ENTER_FRAME, loop);
-			this.addEventListener(Event.ENTER_FRAME, loop1);
-			this.addEventListener(Event.ENTER_FRAME, loop2);
-			this.addEventListener(Event.ENTER_FRAME, loop3);
-		}
+			}
 		
+			//keycodes / movement
 		private function loop(e:Event):void 
 		{
-			if (dpressed)
+			//yas sin
+			//xas cos
+			//ymove = sin(rot);
+			//xmove = cos(rot);
+			//rot is radian, no angle
+			//rad = 1/2 pi
+			//angle = 90 degrees
+			//degrees*Math.PI / 180;
+			//radians*180 / Math.PI
+			
+			speed = input.y * 6;
+			
+			tank.rotation += input.x * 5;
+			
+			var radians:Number = tank.rotation * Math.PI / 180;
+			var xmove:Number = Math.cos(radians);
+			var ymove:Number = Math.sin(radians);
+			
+			tank.x += xmove * -speed;
+			tank.y += ymove * -speed;
+			
+			var diffx:Number = mouseX- tank.x;
+			var diffy:Number = mouseY - tank.y;
+			radians = Math.atan2(diffy, diffx);
+			
+			var degrees:Number = radians * 180 / Math.PI;
+			
+			tank.turnTurret(degrees - tank.rotation);
+			
+			
+			//shoot bullets! in a loop
+			if (bullets.length > 0)
 			{
-				tank.x += 5;
+				for (var i: int = bullets.length - 1; i >= 0; i--)
+				{
+					bullets[i].loop();
+				}
 			}
 		}
 		
-		private function loop1(e:Event):void 
+		public function shootBullet(e:MouseEvent):void 
 		{
-			if (wpressed)
-			{
-				tank.y -= 5;
-			}
+			var bullet:Bullot = new Bullot(stage,tank.x,tank.y, tank.turretRotation);
+			bullet.addEventListener(Event.REMOVED_FROM_STAGE, bulletRemoved); // activates the "bulletRemoved()" function whenever this bullet is removed from the stage
+            bullets.push(bullet);
+			stage.addChild(bullet);
 		}
-		private function loop2(e:Event):void 
+		public function bulletRemoved(e:MouseEvent):void 
 		{
-			if (apressed)
-			{
-				tank.x -= 5;
-			}
-		}
-		private function loop3(e:Event):void 
-		{
-			if (spressed)
-			{
-				tank.y += 5;
-			}
-		}
-		
-		private function onKeyDown(e:KeyboardEvent):void 
+			e.currentTarget.removeEventListener(Event.REMOVED_FROM_STAGE, bulletRemoved); //remove the event listener so we don't get any errors
+            bullets.splice(bullets.indexOf(e.currentTarget),1); //remove this bullet from the bulletList array
+        }
+		public function onKeyDown(e:KeyboardEvent):void 
 		{
 			if (e.keyCode == Keyboard.W)
 			{
-				wpressed = true;
+				input.y = -1;
 			}	
 			
 			if (e.keyCode == Keyboard.A)
 			{
-				apressed = true;
+				input.x = -1;
 			}
 			
 			if (e.keyCode == Keyboard.S)
 			{
-				spressed = true;
+				input.y = 1;
 			}
 			
 			if (e.keyCode == Keyboard.D)
 			{
-				dpressed = true;
+				input.x = 1;
 			}
 		}
 		
-		private function onKeyUp(e:KeyboardEvent):void 
+		public function onKeyUp(e:KeyboardEvent):void 
 		{
 			if (e.keyCode == Keyboard.W)
 			{
-				wpressed = false;
+				input.y = 0;
 			}
 			
 			if (e.keyCode == Keyboard.A)
 			{
-				apressed = false;
+				input.x = 0;
 			}
 			
 			if (e.keyCode == Keyboard.S)
 			{
-				spressed = false;
+				input.y = 0;
 			}
 			
 			if (e.keyCode == Keyboard.D)
 			{
-				dpressed = false;
+				input.x = 0;
 			}
 		}
 
-		private function onClick(e:MouseEvent):void 
+		public function onClick(e:MouseEvent):void 
 		{
-			trace("!!");
-		
+			shootBullet(e);
 		}
 		
 	}

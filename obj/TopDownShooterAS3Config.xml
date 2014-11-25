@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'13-11-2014'</value>
+      <value>'20-11-2014'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -38,6 +38,7 @@
     </source-path>
     <library-path append="true">
       <path-element>D:\Downloads\06 School\DIP\TopDownShooter\TopDownShooter\lib\assets.swc</path-element>
+      <path-element>D:\Downloads\06 School\DIP\TopDownShooter\TopDownShooter\lib\bullet.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
