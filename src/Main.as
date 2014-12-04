@@ -49,9 +49,10 @@ package
 		}		
 		private function createBullet(e:Event):void
 		{
-			var bullet:Bullot = new Bullot(tank.x,tank.y, tank.turretRotation+tank.rotation);
+			var bullet:Bullot = new Bullot(tank.x,tank.y, tank.turretRotation+tank.rotation, tank.turretLenght);
 			bullets.push(bullet);
 			addChild(bullet);
+			bullet.scaleX = bullet.scaleY = tank.scaleX;
 			
 			
 			//bullets.push(new Bullet());
