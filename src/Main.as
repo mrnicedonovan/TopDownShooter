@@ -46,7 +46,7 @@ package
 				addChild(enemy);
 				enemy.x = Math.random() * stage.stageWidth;
 				enemy.y = Math.random() * stage.stageHeight;
-
+				enemy.addEventListener("ShootBullet", createBullet);
 			}
 			
 			bullets = new Array();
