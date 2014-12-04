@@ -1,4 +1,4 @@
-TopDownShooter
-==============
+TankGameMG1b
+============
 
-Simple TopDownShooter in AS3
+fist time top down shooter game for DIP lessons

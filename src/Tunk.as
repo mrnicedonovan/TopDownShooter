@@ -1,39 +1,61 @@
 package  
 {
 	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	/**
 	 * ...
 	 * @author Donovan Nguyen
 	 */
-	public class Tunk extends Sprite 
+	public class Tunk extends MovieClip
 	{
 		private var tankBodyArt:MovieClip;
-		public var tankTurretArt:TankTurretArt;
+		private var tankTurretArt:TankTurretArt;
+		public var turretRotation:Number;
+		public var speed:Number = 0;
 		
-		public var turretRotation:int;
-		
-		private var _bullet:Bullot;
-		
-		public function Tunk()
+		public function Tunk() 
 		{
-			tankBodyArt = new TankBodyArt();
+			this.scaleX = this.scaleY = 0.2;
+			tankBodyArt = new TankBodyArt();//instantieren van de Class
 			this.addChild(tankBodyArt);
-			
 			tankTurretArt = new TankTurretArt();
-			this.addChild(tankTurretArt);
+			this.addChild(tankTurretArt);		
 			
+			this.addEventListener(Event.ADDED_TO_STAGE, init);
 		}
-		
-		
-		public function turnTurret(rotation:Number):void
+		private function init(e:Event):void
 		{
-			tankTurretArt.rotation = rotation;
-			turretRotation = rotation;
+			stage.addEventListener(MouseEvent.CLICK, onClick);
 		}
 		
+		private function onClick(e:MouseEvent):void
+		{
+			trace("ik heb nu geklikt!");
+			dispatchEvent(new Event("ShootBullet"));
+			
+		}		
+		public function update():void
+		{
+			//movement
+			
+			var radians:Number = this.rotation * Math.PI / 180;
+			var xMove:Number = Math.cos(radians);
+			var yMove:Number = Math.sin(radians);
+			
+			this.x += xMove * -speed;
+			this.y += yMove * -speed;
+			
+			
+			//rotation turret
+			var diffX:Number = mouseX;
+			var diffy:Number = mouseY;
+			radians = Math.atan2(diffy, diffX)
+			var degrees:Number = radians * 180 / Math.PI;
+			
+			tankTurretArt.rotation = degrees;	
+			turretRotation = degrees;
+		}
 	}
 
 }
