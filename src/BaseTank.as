@@ -18,14 +18,15 @@ package
 		public function BaseTank() 
 		{
 			//this.alpha = 0.1;
-			this.scaleX = this.scaleY = 0.35;
+			this.scaleX = this.scaleY = 0.3;
 			tankBodyArt = new TankBodyArt();//instantieren van de Class
 			this.addChild(tankBodyArt);
 			tankTurretArt = new TankTurretArt();
 			this.addChild(tankTurretArt);		
 			turretLenght = tankTurretArt.width * this.scaleX;
 		}
-				public function update():void
+		
+		public function update():void
 		{
 			//movement
 			

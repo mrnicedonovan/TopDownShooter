@@ -18,6 +18,8 @@ package
 		
 		private var input:Point = new Point();
 		
+		private var enemies:Array;
+		
 		
 		public function Main():void 
 		{
@@ -33,16 +35,20 @@ package
 			this.addChild(tank);
 			tank.x = stage.stageWidth * 0.5;
 			tank.y = stage.stageHeight * 0.5;
-			
-			var el:Enumi = new Enumi();
-			addChild(el);
-			
-			
 			tank.addEventListener("ShootBullet", createBullet);
 			
 			
-			bullets = new Array();
+			enemies = new Array();
+			for (var i:int = 0; i < 4; i++) 
+			{
+				var enemy:Enumi = new Enumi();
+				enemies.push(enemy);
+				addChild(enemy);
+				enemy.x = Math.random() * stage.stageWidth;
+				enemy.y = Math.random() * stage.stageHeight;
+			}
 			
+			bullets = new Array();
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -83,8 +89,10 @@ package
 			
 			tank.update();
 			
-			
-			
+			for (var j:int = 0; j < enemies.length; j++) 
+			{
+				enemies[j].update();
+			}
 			
 			//tank.turnTurret(degrees - tank.rotation);
 			
