@@ -45,7 +45,7 @@ package
 			
 			tankTurretArt.rotation = degrees;	
 			turretRotation = degrees;
-		}
+		}	
 		
 	}
 

@@ -34,6 +34,9 @@ package
 			tank.x = stage.stageWidth * 0.5;
 			tank.y = stage.stageHeight * 0.5;
 			
+			var el:Enumi = new Enumi();
+			addChild(el);
+			
 			
 			tank.addEventListener("ShootBullet", createBullet);
 			
