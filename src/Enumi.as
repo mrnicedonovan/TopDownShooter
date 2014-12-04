@@ -1,5 +1,6 @@
 package  
 {
+	import Events.ShootEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import flash.display.MovieClip;
@@ -22,7 +23,9 @@ package
 		
 		private function tick(e:TimerEvent):void 
 		{
-			dispatchEvent(new Event("ShootBullet"));
+			var evund:ShootEvent = new ShootEvent(ShootEvent.SHOOT_BULLET);
+			evund.shooter = this;
+			dispatchEvent(evund);
 		}
 		
 	}

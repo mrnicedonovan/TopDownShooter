@@ -54,6 +54,7 @@
   <libraryPaths>
     <element path="lib\assets.swc" />
     <element path="lib\bullet.swc" />
+    <element path="lib\assets3.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

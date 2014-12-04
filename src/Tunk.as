@@ -1,5 +1,6 @@
 package  
 {
+	import Events.ShootEvent;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -20,7 +21,10 @@ package
 		
 		private function onClick(e:MouseEvent):void
 		{
-			dispatchEvent(new Event("ShootBullet"));
+			var evunt:ShootEvent = new ShootEvent(ShootEvent.SHOOT_BULLET);
+			evunt.shooter = this;
+			
+			dispatchEvent(evunt);
 			
 		}		
 

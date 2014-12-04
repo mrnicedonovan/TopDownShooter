@@ -39,6 +39,7 @@
     <library-path append="true">
       <path-element>D:\02 School\Vakken\DIP\TopDownShooter\TopDownShooter\lib\assets.swc</path-element>
       <path-element>D:\02 School\Vakken\DIP\TopDownShooter\TopDownShooter\lib\bullet.swc</path-element>
+      <path-element>D:\02 School\Vakken\DIP\TopDownShooter\TopDownShooter\lib\assets3.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>

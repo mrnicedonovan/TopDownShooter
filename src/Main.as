@@ -4,6 +4,7 @@ package
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	import Events.ShootEvent;
 	
 	import flash.geom.Point;
 	/**
@@ -13,12 +14,10 @@ package
 	public class Main extends Sprite 
 	{
 		private var tank:Tunk;
-		
 		private var bullets:Array;
-		
 		private var input:Point = new Point();
-		
 		private var enemies:Array;
+		private var chests:Vector.<Chest>;
 		
 		
 		public function Main():void 
@@ -37,6 +36,8 @@ package
 			tank.y = stage.stageHeight * 0.5;
 			tank.addEventListener("ShootBullet", createBullet);
 			
+			Chust = new Vector.<Chest>();
+			createChests();
 			
 			enemies = new Array();
 			for (var i:int = 0; i < 4; i++) 
@@ -46,7 +47,7 @@ package
 				addChild(enemy);
 				enemy.x = Math.random() * stage.stageWidth;
 				enemy.y = Math.random() * stage.stageHeight;
-				enemy.addEventListener("ShootBullet", createBullet);
+				enemy.addEventListener(ShootEvent.SHOOT_BULLET, createBullet);
 			}
 			
 			bullets = new Array();
@@ -57,9 +58,23 @@ package
 			
 			
 		}		
-		private function createBullet(e:Event):void
+		
+		private function createChests():void 
 		{
-			var bullet:Bullot = new Bullot(tank.x,tank.y, tank.turretRotation+tank.rotation, tank.turretLenght);
+			for (var i:int = 0; i < 5; i++) 
+			{
+				var chust:Chust = new Chust();
+				chests.push(chust);
+				addChild(chust);;
+				chust.x = Math.random() * stage.stageWidth
+				chust.y = Math.random() * stage.stageHeight;
+				chust.scaleX = chust.scaleY = BaseTank.scaleX;
+			}
+		}
+		private function createBullet(e:ShootEvent):void
+		{
+			var shooter:BaseTank = e.shooter;
+			var bullet:Bullot = new Bullot(shooter.x,shooter.y, shooter.turretRotation+shooter.rotation, shooter.turretLenght);
 			bullets.push(bullet);
 			addChild(bullet);
 			bullet.scaleX = bullet.scaleY = tank.scaleX;
