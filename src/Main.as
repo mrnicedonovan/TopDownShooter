@@ -46,6 +46,7 @@ package
 				addChild(enemy);
 				enemy.x = Math.random() * stage.stageWidth;
 				enemy.y = Math.random() * stage.stageHeight;
+
 			}
 			
 			bullets = new Array();

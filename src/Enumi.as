@@ -1,5 +1,7 @@
 package  
 {
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -9,10 +11,18 @@ package
 	 */
 	public class Enumi extends BaseTank
 	{
+		private var shotTimurh:Timer;
 		
 		public function Enumi() 
 		{
-			
+			shotTimurh = new Timer(2500 + Math.random()*1000);
+			shotTimurh.addEventListener(TimerEvent.TIMER, tick);
+			shotTimurh.start();
+		}
+		
+		private function tick(e:TimerEvent):void 
+		{
+			dispatchEvent(new Event("ShootBullet"));
 		}
 		
 	}
