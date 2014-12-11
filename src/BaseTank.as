@@ -14,6 +14,9 @@ package
 		public var turretRotation:Number;
 		public var speed:Number = 0;
 		public var turretLenght:Number;
+		public var targetX:int;
+		public var targetY:int;
+		public var lives:int = 5;
 		
 		public function BaseTank() 
 		{
@@ -39,8 +42,8 @@ package
 			
 			
 			//rotation turret
-			var diffX:Number = mouseX;
-			var diffy:Number = mouseY;
+			var diffX:Number = targetX;
+			var diffy:Number = targetY;
 			radians = Math.atan2(diffy, diffX)
 			var degrees:Number = radians * 180 / Math.PI;
 			

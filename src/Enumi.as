@@ -13,6 +13,7 @@ package
 	public class Enumi extends BaseTank
 	{
 		private var shotTimurh:Timer;
+		public var targetTank:BaseTank;
 		
 		public function Enumi() 
 		{
@@ -28,6 +29,16 @@ package
 			dispatchEvent(evund);
 		}
 		
+		override public function update():void 
+		{
+			if (targetTank != null)
+			{
+				targetX = targetTank.x - x;
+				targetY = targetTank.y - y;
+			}
+			
+			super.update();
+		}
 	}
 
 }

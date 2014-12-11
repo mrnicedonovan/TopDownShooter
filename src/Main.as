@@ -17,7 +17,6 @@ package
 		private var bullets:Array;
 		private var input:Point = new Point();
 		private var enemies:Array;
-		private var chests:Vector.<Chest>;
 		
 		
 		public function Main():void 
@@ -35,9 +34,7 @@ package
 			tank.x = stage.stageWidth * 0.5;
 			tank.y = stage.stageHeight * 0.5;
 			tank.addEventListener("ShootBullet", createBullet);
-			
-			Chust = new Vector.<Chest>();
-			createChests();
+
 			
 			enemies = new Array();
 			for (var i:int = 0; i < 4; i++) 
@@ -47,6 +44,7 @@ package
 				addChild(enemy);
 				enemy.x = Math.random() * stage.stageWidth;
 				enemy.y = Math.random() * stage.stageHeight;
+				enemy.targetTank = tank;
 				enemy.addEventListener(ShootEvent.SHOOT_BULLET, createBullet);
 			}
 			
@@ -55,26 +53,13 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			this.addEventListener(Event.ENTER_FRAME, loop);
-			
-			
 		}		
 		
-		private function createChests():void 
-		{
-			for (var i:int = 0; i < 5; i++) 
-			{
-				var chust:Chust = new Chust();
-				chests.push(chust);
-				addChild(chust);;
-				chust.x = Math.random() * stage.stageWidth
-				chust.y = Math.random() * stage.stageHeight;
-				chust.scaleX = chust.scaleY = BaseTank.scaleX;
-			}
-		}
 		private function createBullet(e:ShootEvent):void
 		{
 			var shooter:BaseTank = e.shooter;
 			var bullet:Bullot = new Bullot(shooter.x,shooter.y, shooter.turretRotation+shooter.rotation, shooter.turretLenght);
+			
 			bullets.push(bullet);
 			addChild(bullet);
 			bullet.scaleX = bullet.scaleY = tank.scaleX;
@@ -85,11 +70,34 @@ package
 		}
 		private function loop(e:Event):void 
 		{	
+			var toRemove:Boolean = false;
+			
 			for (var i:int = 0; i < bullets.length; i++ )
 			{
 				bullets[i].update();
 			}
 			
+			for (var k:int = 0; k < enemies.lenght; k++)
+ 			{
+				if(enemies[k].hitTestPoint(bullets[i].x, bullets[i].y, true))
+				{
+					toRemove = true;
+					enemies[k].lives--;
+					if (enemies[k].lives <= 0 )
+					{
+						removeChild(enemies[k]);
+						enemies.splice(k, 1);
+					}
+				}
+			}
+
+			
+			
+			if (toRemove)
+			{
+				removeChild(bullets[i]);
+				bullets.splice(1, 1);
+			}
 			//yas gebruik je de sin
 			//xas gebruik je de cos
 			//ymove = sin(rot);

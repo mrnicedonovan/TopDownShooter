@@ -27,7 +27,13 @@ package
 			dispatchEvent(evunt);
 			
 		}		
-
+		
+		override public function update():void 
+		{
+			targetX = mouseX;
+			targetY = mouseY;
+			super.update();
+		}
 	}
 
 }
